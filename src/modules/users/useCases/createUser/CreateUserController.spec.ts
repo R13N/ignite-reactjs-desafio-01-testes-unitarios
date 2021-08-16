@@ -11,7 +11,7 @@ describe("Create user controller", ()=> {
   beforeAll(async()=>{
     connection = await createConnection();
     await connection.runMigrations();
-  })
+  });
   
   afterAll(async() => {
     await connection.dropDatabase();
@@ -34,9 +34,6 @@ describe("Create user controller", ()=> {
       email: "guotvof@le.to",
       password: "123456"
     })
-
-    console.log(response.status);
-    console.log(response.body);
 
     expect(response.status).toBe(400);
   })
