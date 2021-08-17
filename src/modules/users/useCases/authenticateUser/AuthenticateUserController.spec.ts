@@ -1,10 +1,10 @@
 import request from "supertest";
-import { Connection } from "typeorm";
+import { Connection, createConnection } from "typeorm";
 import { hash } from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 
 import { app } from "../../../../app";
-import createConnection from "../../../../database";
+// import createConnection from "../../../../database";
 
 let connection: Connection;
 
@@ -54,11 +54,8 @@ describe("Authenticate an user", () => {
       password: "wrongpass",
     });
 
-    console.log(response.body);
-    console.log(response.status);
-
     expect(response.status).toBe(401);
     expect(response.body).toHaveProperty("message");
-  })
+  });
 
 })
