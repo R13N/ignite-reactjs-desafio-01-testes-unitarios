@@ -4,14 +4,16 @@ import { hash } from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 
 import { app } from "../../../../app";
-// import createConnection from "../../../../database";
 
 let connection: Connection;
 
 describe("Authenticate an user", () => {
-  
+
   beforeAll(async()=>{
     connection = await createConnection();
+  });
+  
+  beforeEach(async()=>{
     await connection.runMigrations();
 
     const id = uuidv4();
@@ -22,11 +24,14 @@ describe("Authenticate an user", () => {
       values('${id}', 'Adrian Hall', 'el@boh.nz', '${password}', 'now()', 'now()')`
     );
   });
+
+  afterEach(async()=>{
+    await connection.dropDatabase();
+  });
   
   afterAll(async() => {
-    await connection.dropDatabase();
     await connection.close();
-  })
+  });
 
   it("should be able to authenticate an user.", async () => {
 
